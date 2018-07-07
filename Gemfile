@@ -42,6 +42,10 @@ gem 'bootstrap', '~> 4.0.0.beta2.1'
 gem 'jquery-rails'
 # Add HTTParty for connecting to APIs
 gem 'httparty'
+# For user authentication
+gem 'devise', '~> 4.3'
+# For managing admins
+gem 'activeadmin', '~> 1.1'
 
 
 group :development, :test do
