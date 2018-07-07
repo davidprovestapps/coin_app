@@ -434,7 +434,51 @@ With:
     </div>
 ```
 Awesome now we have users that can sign in and sign up.<br/>
-
+Let's clean up the navbar.<br/>
+Delete the disabled link in app/views/shared/_header.html.erb:
+```
+<li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+</li>
+```
+Now we will use embedded ruby to show alternative navbar links dependent if the user is signed in or not.<br/>
+If the user <strong>is</strong> signed in we want to show them their settings and a sign out link.<br/>
+If the user <strong>is not</strong> signed in we want to show the user sign in and sign up options.<br/>
+For the user settings we are using the Devise method current_user to get the current user and then the first name and interpolate it in the string.<br/>
+Interpolation means insert a ruby object into a string but when it prints, it prints out the value of the variable into the text.<br/>
+Update:
+```
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Users
+  </a>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <%= link_to 'Sign In', new_user_session_path, { class: "dropdown-item" } %>
+    <%= link_to 'Sign Up', new_user_registration_path, { class: "dropdown-item" } %>
+  </div>
+</li>
+```
+To:
+```
+<li class="nav-item dropdown">
+  <% if user_signed_in? %>
+    <li class="nav-item">
+      <%= link_to "#{current_user.first_name}\'s Settings", edit_user_registration_path, { class: "nav-link" } %>
+    </li>
+    <li class="nav-item">
+       <%= link_to 'Sign Out', destroy_user_session_path, { method: :delete, class: "nav-link" } %>
+    </li>
+  <% else %>
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Users
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <%= link_to 'Sign In', new_user_session_path, { class: "dropdown-item" } %>
+      <%= link_to 'Sign Up', new_user_registration_path, { class: "dropdown-item" } %>
+    </div>
+  <% end %>
+</li>
+```
 ## Lecture 7 - Graphing Coin Prices on Homepage
 We will use the Chartkick gem to graph the coin prices.<br/>
 Add the gem to the Gemfile:
@@ -673,51 +717,6 @@ In the app/views/homepage/index.html.erb where you cut the above code put a refe
 ```
 
 ## Lecture 9 - Styling the Navbar 
-Let's clean up the navbar.<br/>
-Delete the disabled link in app/views/shared/_header.html.erb:
-```
-<li class="nav-item">
-    <a class="nav-link disabled" href="#">Disabled</a>
-</li>
-```
-Now we will use embedded ruby to show alternative navbar links dependent if the user is signed in or not.<br/>
-If the user <strong>is</strong> signed in we want to show them their settings and a sign out link.<br/>
-If the user <strong>is not</strong> signed in we want to show the user sign in and sign up options.<br/>
-For the user settings we are using the Devise method current_user to get the current user and then the first name and interpolate it in the string.<br/>
-Interpolation means insert a ruby object into a string but when it prints, it prints out the value of the variable into the text.<br/>
-Update:
-```
-<li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Users
-  </a>
-  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-    <%= link_to 'Sign In', new_user_session_path, { class: "dropdown-item" } %>
-    <%= link_to 'Sign Up', new_user_registration_path, { class: "dropdown-item" } %>
-  </div>
-</li>
-```
-To:
-```
-<li class="nav-item dropdown">
-  <% if user_signed_in? %>
-    <li class="nav-item">
-      <%= link_to "#{current_user.first_name}\'s Settings", edit_user_registration_path, { class: "nav-link" } %>
-    </li>
-    <li class="nav-item">
-       <%= link_to 'Sign Out', destroy_user_session_path, { method: :delete, class: "nav-link" } %>
-    </li>
-  <% else %>
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Users
-    </a>
-    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-      <%= link_to 'Sign In', new_user_session_path, { class: "dropdown-item" } %>
-      <%= link_to 'Sign Up', new_user_registration_path, { class: "dropdown-item" } %>
-    </div>
-  <% end %>
-</li>
-```
 Install Active\_link_to gem so we can highlight the current active link.<br/>
 Add the gem to the Gemfile:
 ```
