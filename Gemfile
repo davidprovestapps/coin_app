@@ -40,6 +40,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.0.0.beta2.1'
 # Add JQuery as Rails 5 doesn't include this by default
 gem 'jquery-rails'
+# Add HTTParty for connecting to APIs
+gem 'httparty'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
