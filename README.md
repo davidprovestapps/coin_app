@@ -560,8 +560,12 @@ Chartkick.options = {
 ```
 
 ## <strong>Section 2 - Historic Coin Price Charts and Homepage Styling</strong>
-## Lecture 8 - Graphing Weekly History of Coin Prices
+## Lecture 8 - Graphing Weekly History of BTC Prices
 The current price of the coin is important, but we really want to see the historical performance of the coin.<br/>
+Add below the line BASE\_URI a HISTORIC\_URI in app/controllers/homepage_controller.rb:
+```
+HISTORIC_URI = 'https://min-api.cryptocompare.com/data/histohour'
+```
 Add a new histroical\_data variable to the index action in app/controllers/homepage_controller.rb:
 ```
 # historic data - return data (exluding metadata) parsed as ruby hash
@@ -576,11 +580,12 @@ At this point we can delete the example pie chart in app/views/homepage/index.ht
 In the same file add a line chart below the bar chart:
 
 ```
-<%= line_chart @coin_timeseries[key] %>
+<%= line_chart @timeseries_data %>
 ```
 We cannot directly feed the historic\_data to the line_chart.<br/>
 Instead we must format it in the app/controllers/homepage_controller.rb:
 ```
+# {Time => Price}
 @timeseries_data = Hash.new
 @historic_data.each do |entry|
   # For each timestamp (key) store the close price (value)
@@ -606,6 +611,8 @@ Update the line chart in app/views/homepage/index.html.erb with axis titles:
 ```
 <%= line_chart @timeseries_data, xtitle: "Date & Time", ytitle: '$'+@denomination %>
 ```
+
+## Lecture 9 - Graphing Weekly Historic Prices of Multiple Coins 
 Just like we used partials to keep our views clean, we use helpers to move complexity out of our views.<br/>
 Add the following method defintion to app/helpers/application_helper.rb:
 ```
@@ -716,7 +723,7 @@ In the app/views/homepage/index.html.erb where you cut the above code put a refe
 <%= render 'shared/chart' %>
 ```
 
-## Lecture 9 - Styling the Navbar 
+## Lecture 10 - Styling the Navbar 
 Install Active\_link_to gem so we can highlight the current active link.<br/>
 Add the gem to the Gemfile:
 ```

@@ -3,6 +3,8 @@
 
 <%= @data %>
 
-<%= pie_chart({"Football" => 10, "Basketball" => 5}) %>
+<%= @historic_data %>
 
 <%= bar_chart(@chart_data) %>
+
+<%= line_chart @timeseries_data, xtitle: "Date & Time", ytitle: '$'+@denomination %>
