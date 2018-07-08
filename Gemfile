@@ -46,7 +46,8 @@ gem 'httparty'
 gem 'devise', '~> 4.3'
 # For managing admins
 gem 'activeadmin', '~> 1.1'
-
+# Adding charts
+gem 'chartkick'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
